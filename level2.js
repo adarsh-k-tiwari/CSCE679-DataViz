@@ -1,10 +1,10 @@
 (function(){
-    // Set up dimensions and margins
-    const margin = { top: 50, right: 120, bottom: 50, left: 80 };
+    // Define Canvas dimension
+    const margin = {top: 50, right: 120, bottom: 50, left: 80};
     const width = 1000 - margin.left - margin.right;
     const height = 500 - margin.top - margin.bottom;
 
-    // Create SVG container
+    // Define SVG container for Level 2
     const svg = d3.select("#level2")
         .append("svg")
         .attr("width", width + margin.left + margin.right)
@@ -18,12 +18,8 @@
         .attr("class", "tooltip")
         .style("opacity", 0);
 
-    // Parse the CSV data
+    // Read the CSV file
     d3.csv("temperature_daily.csv").then(function(data) {
-        // Filter data for the last 10 years (2008-2017)
-        const startYear = 2008;
-        const endYear = 2017;
-        
         // Process and filter data
         data.forEach(d => {
             const dateParts = d.date.split('-');
@@ -34,9 +30,10 @@
             d.min_temperature = +d.min_temperature;
         });
         
-        const filteredData = data.filter(d => d.year >= startYear && d.year <= endYear);
-        
-        // Group data by year and month
+        // Filter data for the last 10 years (2008-2017)
+        const startYear = 2008;
+        const endYear = 2017;
+        const filteredData = data.filter(d => d.year >= startYear && d.year <= endYear);        
         const nestedData = d3.groups(filteredData, d => d.year, d => d.month);
         
         // Flatten the nested data for the heatmap
@@ -56,7 +53,7 @@
                     month: month,
                     avgMax: avgMax,
                     avgMin: avgMin,
-                    days: days.sort((a, b) => a.day - b.day) // Sort days
+                    days: days.sort((a, b) => a.day - b.day)
                 });
             });
         });
@@ -87,7 +84,7 @@
         const yScale = d3.scaleBand()
             .domain(months)
             .range([0, height])
-            .padding(0.05);
+            .padding(0.1);
         
         // Create axes
         const xAxis = d3.axisTop(xScale)
@@ -102,11 +99,11 @@
         svg.append("g")
             .call(yAxis);
         
-        // Function to create mini line charts within cells
+        // Function to create line charts within cells
         function createMiniChart(selection, data, tempType) {
-            // Set up scales for mini charts
+            // Define scales for line charts
             const dayScale = d3.scaleLinear()
-                .domain([1, 31])
+                .domain([0, 35])
                 .range([0, xScale.bandwidth()]);
             
             // Different y scales for max and min temperatures
@@ -139,9 +136,9 @@
                 .attr("d", minLine);
         }
         
-        // Create the heatmap cells with mini charts
+        // Create the heatmap with line charts
         function createHeatmap(tempType) {
-            // Remove existing cells
+            // Remove existing heatmap
             svg.selectAll(".cell-group").remove();
             
             // Determine which color scale to use
@@ -177,7 +174,7 @@
                         .style("opacity", 0);
                 });
             
-            // Add mini line charts to each cell
+            // Add line charts to each cell of heatmap
             cellGroups.each(function(d) {
                 createMiniChart(d3.select(this), d, tempType);
             });
@@ -211,7 +208,7 @@
                 .attr("class", "legend")
                 .attr("transform", `translate(${width + legendMargin}, ${height/2 - legendHeight/2})`);
         
-            // Create new gradient definition
+            // Define gradients
             const defs = svg.append("defs");
         
             const linearGradient = defs.append("linearGradient")
@@ -231,8 +228,7 @@
                 const value = tempRange[0] + offset * (tempRange[1] - tempRange[0]);
                 linearGradient.append("stop")
                     .attr("offset", `${offset * 100}%`)
-                    .attr("stop-color", colorScale(value));  // Ensure correct mapping
-
+                    .attr("stop-color", colorScale(value));
                 // console.log("Color scale Value:", colorScale(value));
             }
         
@@ -298,13 +294,13 @@
                 .style("font-size", "10px");
         }
         
-        // Initial render
+        // Initial rendering
         createHeatmap(currentView);
         createLegend(currentView);
         
         // Button event handlers
         d3.select("#maxTemp2").on("click", function() {
-            console.log("Max Temp button clicked"); // Debugging
+            // console.log("Max Temp button clicked");
             d3.select("#maxTemp2").classed("active", true);
             d3.select("#minTemp2").classed("active", false);
             currentView = "avgMax";
@@ -313,7 +309,7 @@
         });
         
         d3.select("#minTemp2").on("click", function() {
-            console.log("Min Temp button clicked"); // Debugging
+            // console.log("Min Temp button clicked");
             d3.select("#maxTemp2").classed("active", false);
             d3.select("#minTemp2").classed("active", true);
             currentView = "avgMin";

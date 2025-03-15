@@ -1,0 +1,49 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+}
+h1{
+    color : #ee6d56;
+}
+button {
+    padding: 6px 12px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 25px;
+}
+.cell:hover {
+    stroke: #000;
+    stroke-width: 1px;
+}
+.tooltip {
+    position: absolute;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    pointer-events: none;
+    font-size: 12px;
+}
+.legend-label {
+    font-size: 10px;
+}
+.control-panel {
+    margin-bottom: 20px;
+}
+.active {
+    background-color: #ee6d56;
+    color: white;
+}
+#minTemp1.active, #minTemp2.active {
+    background-color: #2196f3;
+}
+.line-max {
+    stroke: #5b0505;
+    stroke-width: 1.5;
+    fill: none;
+}
+.line-min {
+    stroke: #2196f3;
+    stroke-width: 1.5;
+    fill: none;
+}

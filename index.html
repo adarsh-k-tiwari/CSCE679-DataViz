@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hong Kong Monthly Temperature Heatmap</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1{
+            color : #ee6d56;
+        }
+        .cell:hover {
+            stroke: #000;
+            stroke-width: 1px;
+        }
+        .tooltip {
+            position: absolute;
+            padding: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            pointer-events: none;
+            font-size: 12px;
+        }
+        .legend-label {
+            font-size: 10px;
+        }
+        .control-panel {
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 6px 12px;
+            margin-right: 10px;
+            cursor: pointer;
+            border-radius: 25px;
+        }
+        .active {
+            background-color: #ee6d56;
+            color: white;
+        }
+        #minTemp1.active, #minTemp2.active {
+            background-color: #2196f3;
+        }
+        .line-max {
+            stroke: #5b0505;
+            stroke-width: 1.5;
+            fill: none;
+        }
+        .line-min {
+            stroke: #2196f3;
+            stroke-width: 1.5;
+            fill: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Assignment-2: Hong Kong Monthly Temperature Heatmap (1997-2016)</h1>
+        <h4>
+            Name: Adarsh Kumar<br>
+            UIN: 635009465<br>
+            Email: <a href="mailto:adash0801@tamu.edu">adarsh0801@tamu.edu</a>
+        </h4><br>
+    
+    <div class="viz-container">
+        <h3>Level 1: Yearly/Monthly Temperature Heatmap</h3>
+        <p>In this task, you need to draw a Matrix View to visualize the Monthly Temperature of Hong Kong, where the color of each matrix cell encodes the temperature. You can find the data in temperature_daily.csv.</p>        
+        <div class="control-panel">
+            <button id="maxTemp1" class="active">Maximum Temperature</button>
+            <button id="minTemp1">Minimum Temperature</button>
+        </div>
+        
+        <div id="level1"></div>
+        
+        <h3>Level 2 : Improvement of the Yearly/Monthly Heatmap</h3>
+        <p>In this task, you need to improve the previous visualization by showing the daily changes of temperature as well. You only need to focus on the last 5 to 10 years of data.</p>
+        <div class="control-panel">
+            <button id="maxTemp2" class="active">Maximum Temperature</button>
+            <button id="minTemp2">Minimum Temperature</button>
+        </div>
+        
+        <div id="level2"></div>
+    </div>
+    <script src="level1.js"></script>
+    <script src="level2.js"></script>
+</body>
+</html>
